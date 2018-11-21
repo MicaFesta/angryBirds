@@ -1,0 +1,149 @@
+class Isla {
+	var pajaros = #{}
+	var cerditosInvadientes
+	var homenajeados = #{}
+	
+	method pajarosFuertes(){
+		return 	pajaros.all({pajaro=>pajaro.fuerza()>50})
+	}
+	
+	method fuerzaIsla(){
+		self.pajarosFuertes().sum()
+	}	
+	
+	method manejoDeLaIra(){
+		pajaros.forEach({pajaro=>pajaro.disminuirIra(5)})
+	}
+	
+	method invasionCerdosa(){
+		pajaros.forEach({pajaro=>pajaro.enojarse()})
+	}
+	
+	method fiestaSorpresa(){
+		homenajeados.forEach({pajaro=>pajaro.enojarse()})
+	}
+	
+	method serieEventosDesafortunados(){
+		
+	}
+	
+	method ocurrirEvento(){
+		
+	}
+}
+
+class Pajaro {
+	var fuerza
+	var ira
+	
+	method fuerza(){
+		return ira * 2
+	}
+	
+	method disminuirIra(numero){
+		return ira - numero
+	}
+		
+}
+
+class Red inherits Pajaro {
+	var cantidadDeVecesQueSeEnojo
+	
+	override method fuerza(){
+		return ira * 10 * cantidadDeVecesQueSeEnojo
+	}
+	
+	method enojarse(){}
+}
+
+class Bomb inherits Pajaro {
+	var topeDeFuerza = 9000
+	
+	override method fuerza(){
+		if ((2 * ira)>topeDeFuerza){
+			return ira * 2
+		}
+		return ira
+	}
+	
+	method enojarse(){}
+}
+
+class Chuck inherits Pajaro {
+	var km
+	
+	override method fuerza(){
+		if (km<=80){
+			return 150
+		}else{
+			return (km-80)*5+80
+		}		
+	}
+	
+	method enojarse(){
+		return km *2
+	}
+	
+	override method disminuirIra(numero){
+		return ira
+	}
+}
+
+class Terence inherits Pajaro {
+	var cantidadDeVecesQueSeEnojo
+	var multiplicador
+	
+	override method fuerza(){
+			return ira * cantidadDeVecesQueSeEnojo * multiplicador
+		}
+		
+	method enojarse(){}
+		
+}
+
+class Matilda inherits Pajaro {
+	var pesoDeLosHuevos = []
+	
+	override method fuerza(){
+			return ira * 2 * pesoDeLosHuevos.sum()
+		}
+		
+	method enojarse(){
+		return pesoDeLosHuevos.add(2)
+	}
+		
+}
+
+class Pared{
+	var ancho
+	
+	method resistencia(numero){
+		return numero * ancho
+	}
+	
+	method mePuedenMontar(fuerza,numero){
+     return fuerza > self.resistencia(numero)
+}
+}
+
+class CerditosObreros{
+	method resistencia(numero){
+		return 50
+	}
+	
+	method mePuedenMontar(fuerza,numero){
+     return fuerza > self.resistencia(numero)
+}
+}
+
+class CerditosArmados{
+	var cascoOEscudo
+	
+	method resistencia(numero){
+		return numero * cascoOEscudo
+	}
+	
+	method mePuedenMontar(fuerza,numero){
+     return fuerza > self.resistencia(numero)
+}
+}
